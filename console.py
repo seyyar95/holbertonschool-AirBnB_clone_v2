@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
 
                 if value.isdigit():
                     value = int(value)
-                if value.replace(".", "", 1).isdigit():
+                elif value.replace(".", "", 1).isdigit():
                     value = float(value)
 
                 kwargs[key] = value
