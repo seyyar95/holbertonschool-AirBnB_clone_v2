@@ -131,12 +131,18 @@ class HBNBCommand(cmd.Cmd):
                 key, value = arg.split("=")
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1: -1]
-                    value = value.replace("_", " ")
+                    value = value.replace("_", " ").replace('"', '\\"')
+
+                if value.isdigit():
+                    value = int(value)
+                if value.replace(".", "", 1).isdigit():
+                    value = float(value)
 
                 kwargs[key] = value
 
         new_instance = HBNBCommand.classes[class_name](**kwargs)
         storage.new(new_instance)
+        storage.save()
         print(new_instance.id)
 
     def help_create(self):
