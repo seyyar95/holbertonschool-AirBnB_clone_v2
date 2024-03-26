@@ -36,13 +36,13 @@ class DBStorage:
         if cls:
             for instance in self.__session.query(cls).all():
                 key = f"{cls.__name__}.{instance.id}"
-                dicitonary[key] = instance
+                dictionary[key] = instance
         else:
             for name in self.classes:
                 c_name = eval(name)
                 for instance in self.__session.query(c_name).all():
                     key = f"{c_name.__name__}.{instance.id}"
-                    dicitonary[key] = instance
+                    dictionary[key] = instance
         return dictionary
 
     def new(self, obj):
