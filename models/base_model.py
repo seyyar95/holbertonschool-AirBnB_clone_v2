@@ -2,8 +2,7 @@
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
 from datetime import datetime
-import models
-from sqlalchemy import Column, Integer, String, Datetime
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -17,12 +16,12 @@ class BaseModel:
             primary_key=True
             )
     created_at = Column(
-            Datetime,
+            DateTime,
             nullable=False,
             default=datetime.utcnow()
             )
     updated_at = Column(
-            Datetime,
+            DateTime,
             nullable=False,
             default=datetime.utcnow()
             )
@@ -54,8 +53,8 @@ class BaseModel:
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
-        from models import storage
         self.updated_at = datetime.now()
+        from models import storage
         models.storage.new(self)
         models.storage.save()
 
@@ -74,4 +73,5 @@ class BaseModel:
         """
         Deletes the current instance from the storage
         """
+        from models import storage
         models.storage.delete(self)
