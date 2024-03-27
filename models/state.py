@@ -15,10 +15,6 @@ class State(BaseModel, Base):
             nullable=False
             )
     cities = relationship("City", cascade="all, delete", backref="state")
-    
-    def __init__(self, *args, **kwargs):
-        """ initialization """
-        super().__init__(*args, **kwargs)
 
     @property
     def cities(self):
