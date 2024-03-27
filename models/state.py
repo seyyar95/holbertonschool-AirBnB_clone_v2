@@ -3,7 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-
+from models.city import City
 
 class State(BaseModel, Base):
     """ State class """
@@ -14,3 +14,14 @@ class State(BaseModel, Base):
             nullable=False
             )
     cities = relationship("City", backref="state", cascade="all, delete")
+
+    @property
+    def cities(self):
+        """ Returns the list of City instances with state_id """
+        from models import storage
+        city_instances = []
+        cities = storage.all(City)
+        for obj in cities.values():
+            if obj.state_id == self.id:
+                city_instances.append(obj)
+        return city_instances

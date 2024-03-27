@@ -68,7 +68,3 @@ class Place(BaseModel, Base):
         def amenities(self, obj=None):
             if type(obj) is Amenity and obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
-                
-            
-
-
