@@ -5,7 +5,7 @@ from sqlalchemy import Table, Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from os import getenv
 from models.review import Review
-import models
+
 
 """ Adding SQLAlchemy Table """
 place_amenity = Table(
