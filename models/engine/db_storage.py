@@ -14,7 +14,7 @@ from models.amenity import Amenity
 from models.review import Review
 
 
-user =  getenv('HBNB_MYSQL_USER')
+user = getenv('HBNB_MYSQL_USER')
 passwd = getenv('HBNB_MYSQL_PWD')
 host = getenv('HBNB_MYSQL_HOST')
 db = getenv('HBNB_MYSQL_DB')
@@ -61,4 +61,3 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(Session)
-

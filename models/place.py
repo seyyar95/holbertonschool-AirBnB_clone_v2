@@ -7,8 +7,6 @@ from os import getenv
 from models.review import Review
 
 
-
-
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
@@ -25,21 +23,21 @@ class Place(BaseModel, Base):
     amenity_ids = []
     """ Adding SQLAlchemy Table """
     place_amenity = Table('place_amenity', Base.metadata,
-            Column('place_id', String(60),
-                ForeignKey('places.id'),
-                primary_key=True,
-                nullable=False
-              ),
-            Column('amenity_id', String(60),
-                ForeignKey('amenities.id'),
-                primary_key=True,
-                nullable=False
-             )
-            )
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True,
+                                 nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True,
+                                 nullable=False)
+                          )
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        reviews = relationship('Review', cascade='all, delete', backref='place')
-        amenities = relationship('Amenity', secondary='place_amenity', viewonly=False)
+        reviews = relationship('Review',
+                               cascade='all, delete', backref='place')
+        amenities = relationship('Amenity',
+                                 secondary='place_amenity', viewonly=False)
     else:
         @property
         def reviews(self):
@@ -50,14 +48,11 @@ class Place(BaseModel, Base):
                     new_list.append(obj)
             return (new_list)
 
-        
-
-
         @property
         def amenities(self):
             """ Returns the list of Amenities """
             return self.amenity_ids
-        
+
         @amenities.setter
         def amenities(self, obj=None):
             if type(obj) is Amenity and obj.id not in self.amenity_ids:
