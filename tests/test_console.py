@@ -4,6 +4,7 @@ from unittest.mock import patch  # For mocking functions
 
 import models  # Assuming models.py is in the same directory
 
+
 class HBNBCommandTest(unittest.TestCase):
 
     def setUp(self):
@@ -24,7 +25,8 @@ class HBNBCommandTest(unittest.TestCase):
     def test_do_quit_precmd_true(self, mock_precmd):
         mock_precmd.return_value = 'quit'
         self.hbnb.do_quit('')
-        self.assertEqual(self.captured_output.getvalue(), 'Exiting the program with formatting\n')
+        self.assertEqual(self.captured_output.getvalue(),
+                         'Exiting the program with formatting\n')
 
     @patch('HBNBCommand.precmd')
     def test_do_quit_precmd_false(self, mock_precmd):
@@ -34,7 +36,8 @@ class HBNBCommandTest(unittest.TestCase):
 
     def test_do_EOF(self):
         self.hbnb.do_EOF('')
-        self.assertEqual(self.captured_output.getvalue(), '\nExiting the program without formatting\n')
+        self.assertEqual(self.captured_output.getvalue(),
+                         '\nExiting the program without formatting\n')
 
     @patch('HBNBCommand.classes.get')
     def test_do_create_valid_class(self, mock_get_class):
@@ -48,17 +51,20 @@ class HBNBCommandTest(unittest.TestCase):
         mock_get_class.return_value = None
         args = 'InvalidClass name="Invalid"'
         self.hbnb.do_create(args)
-        self.assertIn('** class doesn\'t exist **', self.captured_output.getvalue())
+        self.assertIn('** class doesn\'t exist **',
+                      self.captured_output.getvalue())
 
     def test_do_create_missing_class(self):
         args = ''
         self.hbnb.do_create(args)
-        self.assertIn('** class name missing **', self.captured_output.getvalue())
+        self.assertIn('** class name missing **',
+                      self.captured_output.getvalue())
 
     def test_do_create_invalid_kwargs(self):
         args = 'BaseModel invalid_key=invalid_value'
         self.hbnb.do_create(args)
-        self.assertIn('** class doesn\'t exist **', self.captured_output.getvalue())  # Expect class error for invalid kwargs
+        self.assertIn('** class doesn\'t exist **',
+                      self.captured_output.getvalue())
 
     @patch('HBNBCommand.storage.all')
     def test_do_show_valid_class_id(self, mock_storage_all):
@@ -72,9 +78,11 @@ class HBNBCommandTest(unittest.TestCase):
         mock_storage_all.return_value = {}
         args = 'InvalidClass 123'
         self.hbnb.do_show(args)
-        self.assertIn('** class doesn\'t exist **', self.captured_output.getvalue())
+        self.assertIn('** class doesn\'t exist **',
+                      self.captured_output.getvalue())
 
     def test_do_show_missing_class(self):
         args = ''
         self.hbnb.do_show(args)
-        self.assertIn('** class name missing **', self.captured_output.getvalue())
+        self.assertIn('** class name missing **',
+                      self.captured_output.getvalue())
