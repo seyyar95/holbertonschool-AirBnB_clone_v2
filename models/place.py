@@ -8,7 +8,7 @@ from models.review import Review
 import models
 
 """ Adding SQLAlchemy Table """
-Place_amenity = Table(
+place_amenity = Table(
          'place_amenity',
          Base.metadata,
          Column(
