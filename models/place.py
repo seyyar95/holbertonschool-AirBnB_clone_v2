@@ -1,11 +1,31 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Table, Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from os import getenv
 from models.review import Review
 import models
+
+""" Adding SQLAlchemy Table """
+place_amenity = Table(
+         'place_amenity',
+         Base.metadata,
+         Column(
+             'place_id',
+              String(60),
+              ForeignKey('places.id'),
+              primary_key=True,
+              nullable=False
+              ),
+         Column(
+             'amenity_id',
+             String(60),
+             ForeignKey('amenities.id'),
+             primary_key=True,
+             nullable=False
+             )
+         )
 
 
 class Place(BaseModel, Base):
@@ -22,8 +42,10 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+
     if getenv("HBNB_TYPE_STORAGE") == "db":
         reviews = relationship('Review', cascade='all, delete', backref='place')
+        amenities = relationship('Amenity', secondary='place_amenity', viewonly=False)
     else:
         @property
         def reviews(self):
@@ -32,4 +54,21 @@ class Place(BaseModel, Base):
             for obj in reviewslist.values():
                 if obj.place_id == self.id:
                     new_list.append(obj)
-            return new_list
+            return (new_list)
+
+        
+
+
+        @property
+        def amenities(self):
+            """ Returns the list of Amenities """
+            return amenity_ids
+        
+        @amenities.setter
+        def amenities(self, obj=None):
+            if type(obj) is Amenity and obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
+                
+            
+
+
