@@ -1,8 +1,7 @@
 import unittest
-from io import StringIO  # For capturing console output
-from unittest.mock import patch  # For mocking functions
-
-import models  # Assuming models.py is in the same directory
+from io import StringIO
+from unittest.mock import patch
+from console import HBNBCommand
 
 
 class HBNBCommandTest(unittest.TestCase):
