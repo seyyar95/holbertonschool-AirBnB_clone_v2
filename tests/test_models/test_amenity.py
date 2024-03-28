@@ -7,14 +7,12 @@ from models.amenity import Amenity
 class test_Amenity(test_basemodel):
     """ """
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Amenity"
-        self.value = Amenity
+    def setUp(self):
+        """Set up test fixtures."""
+        super().setUp()
+        self.amenity = Amenity()
 
-    def test_name2(self):
-        """ """
-        new = self.value()
-        new.name = "name"
-        self.assertEqual(type(new.name), str)
+    def test_amenity_name_type(self):
+        """Test the type of the name attribute."""
+        self.amenity.name = "Amenity"
+        self.assertIsInstance(self.amenity.name, str)
