@@ -6,6 +6,10 @@ from sqlalchemy import Column, String
 
 
 class Amenity(BaseModel, Base):
+    """Represents an Amenity for a MySQL database.
+
+    Inherits from SQLAlchemy Base and links to the MySQL table amenities.
+    """
     __tablename__ = 'amenities'
     name = Column(String(128), nullable=False)
     place_amenities = relationship("Place", secondary='place_amenity',
