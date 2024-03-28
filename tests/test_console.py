@@ -23,7 +23,9 @@ class TestConsole(unittest.TestCase):
         self.hbtn.onecmd("create InvaliClass")
         self.assertEqual(mock_stdout.getvalue(), "** class doesn't exist **\n")
 
-    #@patch('sys.stdout', new_callable=StringIO)
-    #def test_create_valid_class(self, mock_stdout):
-        #self.hbtn.onecmd("create State")
-        #self.assertTrue(mock_stdout.getvalue() != "")
+    """
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_create_valid_class(self, mock_stdout):
+        self.hbtn.onecmd("create State")
+        self.assertTrue(mock_stdout.getvalue() != "")
+    """
