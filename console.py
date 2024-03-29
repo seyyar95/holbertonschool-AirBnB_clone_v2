@@ -119,7 +119,6 @@ class HBNBCommand(cmd.Cmd):
 
         class_name = args.pop(0)
 
-
         if not class_name:
             print("** class name missing **")
             return
