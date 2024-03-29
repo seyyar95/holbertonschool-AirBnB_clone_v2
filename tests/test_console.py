@@ -56,5 +56,6 @@ class TestConsole(unittest.TestCase):
         temp_out.close()
         sys.stdout = sys.__stdout__
 
+
 if __name__ == "__main__":
     unittest.main()
