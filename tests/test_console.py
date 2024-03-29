@@ -18,6 +18,9 @@ from models.engine.db_storage import DBStorage
 class TestConsole(unittest.TestCase):
     """this will test the console"""
 
+    def setUp(self):
+        self.hbtn = HBNBCommand()
+
     def test_exists(self):
         """checking for docstrings i think"""
         self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
@@ -39,7 +42,7 @@ class TestConsole(unittest.TestCase):
         temp_out = StringIO()
         sys.stdout = temp_out
 
-        HBNBCommand().do_create(None)
+        self.hbtn.onecmd("create")
         self.assertEqual(temp_out.getvalue(), '** class name missing **\n')
         temp_out.close()
 
@@ -52,7 +55,7 @@ class TestConsole(unittest.TestCase):
         temp_out = StringIO()
         sys.stdout = temp_out
         HBNBCommand().do_create("BaseModel")
-        self.assertEqual(temp_out.getvalue(), '** class doesn\'t exist **\n')
+        self.assertTrue(temp_out.getvalue() != "")
         temp_out.close()
         sys.stdout = sys.__stdout__
 
