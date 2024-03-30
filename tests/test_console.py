@@ -38,7 +38,7 @@ class TestConsole(unittest.TestCase):
         sys.stdout = temp_out
         return temp_out.getvalue()
 
-    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "DBStorage")
+
     def test_create_error(self):
         """test if create works right"""
         temp_out = StringIO()
@@ -56,8 +56,9 @@ class TestConsole(unittest.TestCase):
 
         temp_out = StringIO()
         sys.stdout = temp_out
-        HBNBCommand().do_create("BaseModel")
-        self.assertTrue(temp_out.getvalue() != "")
+        if getenv("HBNB_TYPE_STORAGE") != "db":
+            HBNBCommand().do_create("BaseModel")
+            self.assertTrue(temp_out.getvalue() != "")
         temp_out.close()
         sys.stdout = sys.__stdout__
 

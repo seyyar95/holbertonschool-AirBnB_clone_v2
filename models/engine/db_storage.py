@@ -14,21 +14,31 @@ from models.amenity import Amenity
 from models.review import Review
 
 
-user = getenv('HBNB_MYSQL_USER')
-passwd = getenv('HBNB_MYSQL_PWD')
-host = getenv('HBNB_MYSQL_HOST')
-db = getenv('HBNB_MYSQL_DB')
-
-
 class DBStorage:
     __engine = None
     __session = None
     classes = ["Amenity", "User", "Place", "State", "City", "Review"]
 
     def __init__(self):
-        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(
-                                      user, passwd, host, db,
-                                      pool_pre_ping=True))
+        """ Initialization of Database """
+        self.user = getenv('HBNB_MYSQL_USER')
+        self.pwd = getenv('HBNB_MYSQL_PWD')
+        self.host = getenv('HBNB_MYSQL_HOST')
+        self.db = getenv('HBNB_MYSQL_DB')
+
+        if self.user is None:
+            self.user = 'hbnb_test'
+        if self.pwd is None:
+            self.pwd = 'hbnb_test_pwd'
+        if self.host is None:
+            self.host = 'localhost'
+        if self.db is None:
+            self.db = 'hbnb_test_db'
+
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(self.user, self.pwd,
+                                             self.host, self.db),
+                                      pool_pre_ping=True)
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
