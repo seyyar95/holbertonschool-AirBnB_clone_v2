@@ -38,7 +38,6 @@ class TestConsole(unittest.TestCase):
         sys.stdout = temp_out
         return temp_out.getvalue()
 
-
     def test_create_error(self):
         """test if create works right"""
         temp_out = StringIO()
