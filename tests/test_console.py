@@ -37,6 +37,7 @@ class TestConsole(unittest.TestCase):
         temp_out = StringIO()
         sys.stdout = temp_out
         return temp_out.getvalue()
+
     @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "DBStorage")
     def test_create_error(self):
         """test if create works right"""
