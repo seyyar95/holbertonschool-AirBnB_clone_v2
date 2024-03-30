@@ -13,6 +13,7 @@ from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
+from os import getenv
 
 
 class TestConsole(unittest.TestCase):
@@ -36,7 +37,7 @@ class TestConsole(unittest.TestCase):
         temp_out = StringIO()
         sys.stdout = temp_out
         return temp_out.getvalue()
-
+    @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "DBStorage")
     def test_create_error(self):
         """test if create works right"""
         temp_out = StringIO()
