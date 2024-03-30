@@ -21,19 +21,10 @@ class DBStorage:
 
     def __init__(self):
         """ Initialization of Database """
-        self.user = getenv('HBNB_MYSQL_USER')
-        self.pwd = getenv('HBNB_MYSQL_PWD')
-        self.host = getenv('HBNB_MYSQL_HOST')
-        self.db = getenv('HBNB_MYSQL_DB')
-
-        if self.user is None:
-            self.user = 'hbnb_test'
-        if self.pwd is None:
-            self.pwd = 'hbnb_test_pwd'
-        if self.host is None:
-            self.host = 'localhost'
-        if self.db is None:
-            self.db = 'hbnb_test_db'
+        self.user = getenv('HBNB_MYSQL_USER', 'hbnb_test')
+        self.pwd = getenv('HBNB_MYSQL_PWD', 'hbnb_test_pwd')
+        self.host = getenv('HBNB_MYSQL_HOST', 'localhost')
+        self.db = getenv('HBNB_MYSQL_DB', 'hbnb_test_db')
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(self.user, self.pwd,
