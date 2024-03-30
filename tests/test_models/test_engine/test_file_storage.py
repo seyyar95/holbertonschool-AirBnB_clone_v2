@@ -3,7 +3,7 @@
 import unittest
 from models.base_model import BaseModel
 from models import storage
-from os import getenv
+from os import getenv, remove, path
 
 
 @unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "DBStorage")
@@ -21,7 +21,7 @@ class test_fileStorage(unittest.TestCase):
     def tearDown(self):
         """ Remove storage file at end of tests """
         try:
-            os.remove('file.json')
+            remove('file.json')
         except:
             pass
 
@@ -46,7 +46,7 @@ class test_fileStorage(unittest.TestCase):
     def test_base_model_instantiation(self):
         """ File is not created on BaseModel save """
         new = BaseModel()
-        self.assertFalse(os.path.exists('file.json'))
+        self.assertFalse(path.exists('file.json'))
 
     def test_empty(self):
         """ Data is saved to file """
@@ -54,13 +54,13 @@ class test_fileStorage(unittest.TestCase):
         thing = new.to_dict()
         new.save()
         new2 = BaseModel(**thing)
-        self.assertNotEqual(os.path.getsize('file.json'), 0)
+        self.assertNotEqual(path.getsize('file.json'), 0)
 
     def test_save(self):
         """ FileStorage save method """
         new = BaseModel()
         storage.save()
-        self.assertTrue(os.path.exists('file.json'))
+        self.assertTrue(path.exists('file.json'))
 
     def test_reload(self):
         """ Storage file is successfully loaded to __objects """
@@ -85,7 +85,7 @@ class test_fileStorage(unittest.TestCase):
         """ BaseModel save method calls storage save """
         new = BaseModel()
         new.save()
-        self.assertTrue(os.path.exists('file.json'))
+        self.assertTrue(path.exists('file.json'))
 
     def test_type_path(self):
         """ Confirm __file_path is string """
