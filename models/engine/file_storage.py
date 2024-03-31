@@ -17,3 +17,13 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
+
+    def new(self, obj):
+        """
+        Saves all objects to the storage.
+
+        Args:
+            obj: The object to be saved.
+        """
+        name = obj.__class__.__name__
+        self.__objects[f"{name}.{obj.id}"] = obj
