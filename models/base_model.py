@@ -25,3 +25,23 @@ class BaseModel:
             nullable=False,
             default=datetime.utcnow()
             )
+
+    
+    """A base class for all hbnb models"""
+    def __init__(self, *args, **kwargs):
+        """
+        Initializer for the BaseModel class.
+        """
+
+        tformat = "%Y-%m-%dT%H:%M:%S.%f"
+        self.id = str(uuid.uuid4())
+        self.created_at = self.updated_at = datetime.now()
+
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    self.__dict__[key] = datetime.strptime(value, tformat)
+                elif key == "__class__":
+                    continue
+                else:
+                    self.__dict__[key] = value
