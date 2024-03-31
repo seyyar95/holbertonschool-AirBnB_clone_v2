@@ -32,3 +32,28 @@ class Place(BaseModel, Base):
                                  primary_key=True,
                                  nullable=False)
                           )
+
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship('Review',
+                               cascade='all, delete', backref='place')
+        amenities = relationship('Amenity',
+                                 secondary='place_amenity', viewonly=False)
+    else:
+        @property
+        def reviews(self):
+            reviewslist = models.storage.all(Review)
+            new_list = []
+            for obj in reviewslist.values():
+                if obj.place_id == self.id:
+                    new_list.append(obj)
+            return (new_list)
+
+        @property
+        def amenities(self):
+            """ Returns the list of Amenities """
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self, obj=None):
+            if type(obj) is Amenity and obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
