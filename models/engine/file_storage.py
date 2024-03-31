@@ -27,3 +27,12 @@ class FileStorage:
         """
         name = obj.__class__.__name__
         self.__objects[f"{name}.{obj.id}"] = obj
+
+    def save(self):
+        """Saves storage dictionary to file"""
+        with open(FileStorage.__file_path, 'w') as f:
+            temp = {}
+            temp.update(FileStorage.__objects)
+            for key, val in temp.items():
+                temp[key] = val.to_dict()
+            json.dump(temp, f)
