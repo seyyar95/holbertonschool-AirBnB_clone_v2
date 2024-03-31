@@ -45,3 +45,8 @@ class BaseModel:
                     continue
                 else:
                     self.__dict__[key] = value
+
+    def __str__(self):
+        """Returns a string representation of the instance"""
+        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
