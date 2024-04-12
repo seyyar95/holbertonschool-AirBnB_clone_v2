@@ -30,11 +30,10 @@ def python_text(text):
     return f"Python {text}"
 
 
-@app.route("/number/<n>", strict_slashes=True)
+@app.route("/number/<int:n>", strict_slashes=True)
 def display_number(n):
-    if n.isdigit():
-        return f'{n} is a number'
+    return f'{n} is a number'
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=False)
+    app.run(host="0.0.0.0", debug=True)
