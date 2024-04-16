@@ -13,10 +13,17 @@ app = Flask(__name__)
 @app.route("/hbnb_filters", strict_slashes=False)
 def hbnb_filters():
     """Display State, City, Amenity"""
-    states = storage.all(State)
-    amenities = storage.all(Amenity)
+
+    "Fetch and sort States by name (A->Z)"
+    obj = storage.all(State).values()
+    states = sorted(obj, key=lambda x: x.name)
+
+    "Fetch and sort amenities"
+    amenities = storage.all(Amenity).values()
+    sorted_amenities = sorted(amenities, key=lambda x: x.name)
+
     return render_template("10-hbnb_filters.html", states=states,
-                           amenities=amenities)
+                           amenities=sorted_amenities)
 
 
 @app.teardown_appcontext
